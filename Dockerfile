@@ -47,14 +47,3 @@ RUN pip3 install jupyterlab
 RUN R --no-echo --no-restore --no-save -e "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'uuid', 'digest'))"
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github('IRkernel/IRkernel')"
 RUN R --no-echo --no-restore --no-save -e "IRkernel::installspec(user = F)"
-
-RUN useradd magus -u 1000
-#    && echo "magus ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/magus \
-#    && chmod 0440 /etc/sudoers.d/magus \
-#    && echo "umask 000" >> /home/magus/.bashrc \
-#    && echo "umask 000" >> /root/.bashrc
-
-RUN mkdir -p /home/magus/data
-RUN chown -R 1000 /home/magus
-#USER magus
-
