@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.2
+FROM rocker/r-ver:4.3.2
 
 RUN echo "options(repos = 'https://cloud.r-project.org')" > $(R --no-echo --no-save -e "cat(Sys.getenv('R_HOME'))")/etc/Rprofile.site
 ENV RETICULATE_MINICONDA_ENABLED=FALSE
@@ -43,21 +43,16 @@ RUN R --no-echo --no-restore --no-save -e "IRkernel::installspec(user = F)"
 RUN R --no-echo --no-restore --no-save -e "install.packages(c('BiocManager'))"
 RUN R --no-echo --no-restore --no-save -e "BiocManager::install(c('multtest', 'S4Vectors', 'SummarizedExperiment', 'SingleCellExperiment', 'MAST', 'DESeq2', 'BiocGenerics', 'GenomicRanges', 'IRanges', 'rtracklayer', 'Biobase', 'limma', 'glmGamPoi', 'DelayedArray', 'DelayedMatrixStats', 'lme4', 'batchelor', 'Matrix.utils', 'HDF5Array', 'terra', 'ggrastr', 'Linnorm'))"
 
-RUN R --no-echo --no-restore --no-save -e "install.packages(c('VGAM', 'R.utils', 'metap', 'Rfast2', 'ape', 'enrichR', 'mixtools', 'hdf5r', 'tidyverse', 'viridis', 'harmony', 'rstatix', 'ggpubr','glmnet', 'stringdist', 'usethis', 'gprofiler2', 'magick'))"
+RUN R --no-echo --no-restore --no-save -e "install.packages(c('VGAM', 'R.utils', 'metap', 'Rfast2', 'ape', 'enrichR', 'mixtools', 'hdf5r', 'tidyverse', 'viridis', 'harmony', 'rstatix', 'ggpubr','glmnet', 'stringdist', 'usethis', 'gprofiler2', 'magick', 'ggvenn'))"
 
 RUN R --no-echo --no-restore --no-save -e "remotes::install_github(c('jokergoo/ComplexHeatmap'))"
 
 RUN R --no-echo --no-restore --no-save -e "BiocManager::install(c('scDblFinder', 'DropletUtils'))"
-RUN R --no-echo --no-restore --no-save -e "BiocManager::install(c('affy', 'limma', 'pd.clariom.s.mouse'))"
-RUN R --no-echo --no-restore --no-save -e "BiocManager::install('oligo', configure.args='--disable-threading', force = TRUE)"
-RUN R --no-echo --no-restore --no-save -e "BiocManager::install('preprocessCore', configure.args='--disable-threading', force = TRUE)"
-RUN R --no-echo --no-restore --no-save -e "BiocManager::install(c('clariomsmousetranscriptcluster.db', 'biomaRt'))"
-RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat', 'seurat5', quiet = TRUE)"
-RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-data', 'seurat5', quiet = TRUE)"
-RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/azimuth', 'seurat5', quiet = TRUE)"
-RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-wrappers', 'seurat5', quiet = TRUE)"
-RUN R --no-echo --no-restore --no-save -e "remotes::install_github('bnprks/BPCells', quiet = TRUE)"
-
+RUN R --no-echo --no-restore --no-save -e "BiocManager::install(c('clusterProfiler', 'org.Mm.eg.db'))"
+RUN R --no-echo --no-restore --no-save -e "BiocManager::install(c('biomaRt'))"
+RUN R --no-echo --no-restore --no-save -e "install.packages(c('Seurat'))"
+RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-data', quiet = TRUE)"
+RUN R --no-echo --no-restore --no-save -e "remotes::install_github('satijalab/seurat-wrappers', quiet = TRUE)"
 WORKDIR /mnt/storage
 
 COPY start-notebook.sh /usr/local/bin/
